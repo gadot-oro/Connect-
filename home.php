@@ -13,9 +13,10 @@ require_once "include/connect.php";
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Connect</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.4/flowbite.min.css" rel="stylesheet" />
+    <link rel="icon" type="image/png" sizes="30x30" href="favicon-32x32.png">
 
     <!-- darkmode -->
     <script>
@@ -28,12 +29,12 @@ require_once "include/connect.php";
     </script>
 </head>
 
-<body class="bg-white dark:bg-gray-500">
-    
-        
+<body class="bg-white dark:bg-gray-800">
+
+
 
     <header>
-        <nav class="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
+        <nav class="bg-white border-gray-200 px-4 sm:px-6 py-2.5 dark:bg-gray-900">
             <div class="flex flex-wrap justify-between items-center">
                 <div class="flex justify-start items-center">
 
@@ -53,9 +54,8 @@ require_once "include/connect.php";
                         </svg>
                         <span class="sr-only">Toggle sidebar</span>
                     </button>
-                    <a href="https://flowbite.com" class="flex mr-4">
-                        <img src="https://flowbite.s3.amazonaws.com/logo.svg" class="mr-3 h-8" alt="FlowBite Logo" />
-                        <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Flowbite</span>
+                    <a href="home.php" class="flex mr-4">
+                        <img src="logo2.png" class="mr-1 h-10" alt="Logo" />
                     </a>
                     <form action="#" method="GET" class="hidden lg:block lg:pl-2">
                         <label for="topbar-search" class="sr-only">Search</label>
@@ -82,7 +82,7 @@ require_once "include/connect.php";
                     </button>
 
 
-<!-- create new post/ story -->
+                    <!-- create new post/ story -->
                     <!-- <button type="button" class="hidden sm:inline-flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800" style="background-color: #a1a1aa;">
                     <svg aria-hidden="true" class="mr-1 -ml-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path>
@@ -96,13 +96,6 @@ require_once "include/connect.php";
                             </svg> New Post
                         </button>
                     </a>
-
-
-                    
-
-
-
-
 
 
 
@@ -288,7 +281,6 @@ require_once "include/connect.php";
 
 
                     <!-- profile pictue -->
-                    <!-- profile pictue -->
                     <button type="button" class="flex mx-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="dropdown">
                         <span class="sr-only">Open user menu</span>
                         <div class="relative">
@@ -329,9 +321,6 @@ require_once "include/connect.php";
                     </button>
 
 
-
-
-                    <!-- re -->
                     <!-- Dropdown menu -->
                     <div class="hidden z-50 my-4 w-56 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600" id="dropdown">
                         <div class="py-3 px-4">
@@ -406,17 +395,11 @@ require_once "include/connect.php";
                                 </li>
                             </ul>
                         </div>
-
                     </div>
-
                 </div>
-
         </nav>
-
-
-
     </header>
-    <!-- Add post + -->
+    <!-- Add post button "+" -->
     <div data-dial-init class="fixed right-6 bottom-6 group">
         <div id="speed-dial-menu-vertical" class="flex flex-col items-center hidden mb-4 space-y-2">
             <button type="button" data-tooltip-target="tooltip-share" data-tooltip-placement="left" class="flex justify-center items-center w-[52px] h-[52px] text-gray-500 hover:text-gray-900 bg-white rounded-full border border-gray-200 dark:border-gray-600 shadow-sm dark:hover:text-white dark:text-gray-400 hover:bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 focus:outline-none dark:focus:ring-gray-400">
@@ -469,41 +452,114 @@ require_once "include/connect.php";
         </button>
     </div>
 
-  <!-- post story -->
-  <?php
-// First, connect to the database
-include 'include/connect.php';
 
-// Get the user ID from the session
-$user_id = $_SESSION['id'];
 
-// Query the stories table for the user's posts with user name and created time
-$sql = "SELECT s.*, u.name, s.story_created_at 
-        FROM stories s 
-        JOIN users u ON s.user_id = u.id 
-        WHERE s.user_id = $user_id 
-        ORDER BY s.story_created_at DESC";
-$result = $conn->query($sql);
+    <!-- diplayed posts -->
+    <div class="flex justify-between px-10 mx-auto max-w-screen-lg mt-4 " style=" box-shadow: -1px 18px 11px 0px; border-radius:2px 5px 20px 25px;">
+        <div class=" mx-auto max-w-screen-lg w-full grid grid-cols-1 " >
+                <!-- post story -->
+                <?php
+                // Get all stories from the stories table with user name and created time
+                    $sql = "SELECT s.*, u.name, u.email, u.joined_day, u.profile_picture, s.story_created_at 
+                  FROM stories s 
+                  JOIN users u ON s.user_id = u.id 
+                  ORDER BY s.story_created_at DESC";
+                // $sql = "SELECT s.*, u.name, u.email, u.joined_day, u.profile_picture, s.story_created_at, COUNT(c.id) AS comment_count
+                //     FROM stories s 
+                //     JOIN users u ON s.user_id = u.id 
+                //     LEFT JOIN comments c ON s.id = c.story_id 
+                //     GROUP BY s.id 
+                //     ORDER BY s.story_created_at DESC";
 
-// Loop through the results and display the posts
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        echo "<div class='post'>";
-        echo "<h2>" . $row['story_title'] . "</h2>";
-        echo "<p>" . $row['story_content'] . "</p>";
-        echo "<p>Posted by " . $row['name'] . " on " . $row['story_created_at'] . "</p>";
-        if ($row['story_image']) {
-            echo "<img src='" . $row['story_image'] . "' alt='Post Image'>";
-        }
-        echo "</div>";
-    }
-} else {
-    echo "No posts found.";
-}
+                $result = $conn->query($sql);
 
-// Close the database connection
-// $conn->close();
-?>
+                // Loop through the results and display the posts
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                    // <!-- Post content -->
+                    
+                    echo'<div class="w-full p-2" style=" box-shadow: -1px 18px 11px 0px; border-radius:2px 5px 20px 25px;">';
+                        // <!-- Post author -->
+                        echo'<div class="flex items-center mt-8 mb-2 mx-auto max-w-screen-lg">';
+                            if ($row['profile_picture']) {
+                                // profile picture
+                                echo " <button type='button' class='rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-red-600 mr-8  w-10 h-10 rounded-full ml-10'>";
+                                echo "<img ' src='" . $row['profile_picture'] . "' alt='Profile Picture' class='w-10 h-10 rounded-full ' >";
+                                echo "</button>";
+                            } else {
+                                echo " <button type='button' class='rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-red-600 mr-8  w-10 h-10 rounded-full ml-10'>";
+                                echo "<img src='https://www.citypng.com/public/uploads/preview/profile-user-round-red-icon-symbol-download-png-11639594337tco5j3n0ix.png' alt='Profile Picture' class='mr-8 w-10 h-10>";
+                                echo "</button>";
+                            }
+
+                        echo'<div class="text-gray-700 font-medium ">';
+                                echo "<h2>Posted by " . $row['name'] . "</h2>";
+                                echo "<p>Posted by " . $row['name'] . " on " . $row['story_created_at'] . "</p>";
+                                echo'</div>';
+                        echo'</div>';
+
+                        echo "<hr>";
+
+                        echo'<div class="m-10 mt-4">';
+                        // <!-- Post title -->
+                        echo "<h5 class='text-sm font-bold '>" . $row['story_title'] . "</h5>";
+                        // <!-- Post content -->
+                        echo "<p class='leading-relaxed ml-2';>" . $row['story_content'] . "</p>";
+                        echo'</div>';
+
+                        // <!-- Post image -->
+                        if ($row['story_image']) {
+                            echo "<img src='" . $row['story_image'] . "' alt='Post Image' class='mx-auto rounded max-w-200 mb-4'>";
+                        }
+
+                    echo'</div>';
+
+
+                    }
+                } else {
+                    echo "No posts found.";
+                }
+                
+            ?>
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

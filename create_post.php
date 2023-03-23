@@ -1,6 +1,7 @@
 <?php
 // Start session
 session_start();
+include 'include/connect.php';
 
 // Check if user is logged in
 // if (!isset($_SESSION['user_id'])) {
@@ -82,42 +83,45 @@ Display the form for creating a new post
 
 <a href="home.php">back home</a>
 
-<!-- Display the list of stories -->
-<?php
-// Code for retrieving and displaying the stories goes here
 
+
+
+  <!-- post story -->
+  <?php
+// // First, connect to the database
+// // include 'include/connect.php';
+
+// // Get the user ID from the session
+// $user_id = $_SESSION['id'];
+
+// // Query the stories table for the user's posts with user name and created time
+// $sql = "SELECT s.*, u.name, u.profile_picture, s.story_created_at 
+//         FROM stories s 
+//         JOIN users u ON s.user_id = u.id 
+//         WHERE s.user_id = $user_id 
+//         ORDER BY s.story_created_at DESC";
+// $result = $conn->query($sql);
+
+// // Loop through the results and display the posts
+// if ($result->num_rows > 0) {
+//     while ($row = $result->fetch_assoc()) {
+//         if ($row['profile_picture']) {
+//             echo "<img src='" . $row['profile_picture'] . "' alt='Profile Picture'>";
+//         }
+
+//         echo "<div class='post'>";
+//         echo "<h2>" . $row['story_title'] . "</h2>";
+//         echo "<p>" . $row['story_content'] . "</p>";
+//         echo "<p>Posted by " . $row['name'] . " on " . $row['story_created_at'] . "</p>";
+//         if ($row['story_image']) {
+//             echo "<img src='" . $row['story_image'] . "' alt='Post Image'>";
+//         }
+//         echo "</div>";
+//     }
+// } else {
+//     echo "No posts found.";
+// }
+
+// // Close the database connection
+// // $conn->close();
 ?>
-
-<!-- <?php
-// First, connect to the database
-include 'include/connect.php';
-
-// Get the user ID from the session
-$user_id = $_SESSION['id'];
-
-// Query the stories table for the user's posts
-$sql = "SELECT * FROM stories WHERE user_id = $user_id ORDER BY story_created_at DESC";
-$result = $conn->query($sql);
-
-// Loop through the results and display the posts
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        echo "<div class='post'>";
-        echo "<h2>" . $row['story_title'] . "</h2>";
-        echo "<p>" . $row['story_content'] . "</p>";
-        if ($row['story_image']) {
-            echo "<img src='" . $row['story_image'] . "' alt='Post Image'>";
-        }
-        echo "</div>";
-    }
-} else {
-    echo "No posts found.";
-}
-
-// Close the database connection
-// $conn->close();
-?>
-
-
-
-<a href="home.php">back home</a>

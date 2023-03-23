@@ -40,7 +40,7 @@ session_start();
         </svg>
     </button>
 
-
+<!-- disply of username, profile picture, bio... -->
     <main class="bg-white dark:bg-gray-900 ">
         <div class="flex justify-between px-20 mx-auto max-w-screen-sm" style="margin-top: 6%; box-shadow: 0 10px 15px 0; border-radius: 20px;">
             <address class="flex items-center mb-6 not-italic">
@@ -98,6 +98,7 @@ session_start();
                     }
                     ?>
                 </div>
+                <!-- edit button -->
                 <div class="text-center">
                     <a href="profile_edit.php" class="font-medium hover:text-green-500 dark:text-primary-500 dark:text-white">
                         <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width: 36px; margin-left:1%;">
