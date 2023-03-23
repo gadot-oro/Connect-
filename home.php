@@ -1,6 +1,6 @@
 <?php
-session_start();
 require_once "include/connect.php";
+session_start();
 // Start the session
 ?>
 
@@ -298,16 +298,15 @@ require_once "include/connect.php";
                                 $profile_picture = $row["profile_picture"];
 
                                 // Build the HTML code with the user's data
-                                $html = '<img id="profile_picture" class="w-10 h-10 rounded-full" src="';
+                                $html = '<img src="profile_pictures/';
 
-                                // Add the user's profile picture to the HTML code if it exists
                                 if (!empty($profile_picture)) {
                                     $html .= $profile_picture;
                                 } else {
                                     $html .= 'https://www.citypng.com/public/uploads/preview/profile-user-round-red-icon-symbol-download-png-11639594337tco5j3n0ix.png';
                                 }
 
-                                $html .= '" alt="">';
+                                $html .= '" class="w-10 h-10 rounded-full" alt="Profile Picture">';
 
                                 // Display the HTML code
                                 echo $html;
@@ -315,7 +314,6 @@ require_once "include/connect.php";
                                 echo "User not found.";
                             }
                             ?>
-
                             <span class="top-0 left-7 absolute  w-3.5 h-3.5 bg-green-400 border-2 border-white dark:border-gray-800 rounded-full"></span>
                         </div>
                     </button>
@@ -399,6 +397,8 @@ require_once "include/connect.php";
                 </div>
         </nav>
     </header>
+
+
     <!-- Add post button "+" -->
     <div data-dial-init class="fixed right-6 bottom-6 group">
         <div id="speed-dial-menu-vertical" class="flex flex-col items-center hidden mb-4 space-y-2">
@@ -456,66 +456,81 @@ require_once "include/connect.php";
 
     <!-- diplayed posts -->
     <div class="flex justify-between px-10 mx-auto max-w-screen-lg mt-4 " style=" box-shadow: -1px 18px 11px 0px; border-radius:2px 5px 20px 25px;">
-        <div class=" mx-auto max-w-screen-lg w-full grid grid-cols-1 " >
-                <!-- post story -->
-                <?php
-                // Get all stories from the stories table with user name and created time
-                    $sql = "SELECT s.*, u.name, u.email, u.joined_day, u.profile_picture, s.story_created_at 
+        <div class=" mx-auto max-w-screen-lg w-full grid grid-cols-1 ">
+            <!-- post story -->
+
+
+            <?php
+            // Get all stories from the stories table with user name and created time
+            $sql = "SELECT s.*, u.name, u.email, u.joined_day, u.profile_picture, s.story_created_at 
                   FROM stories s 
                   JOIN users u ON s.user_id = u.id 
                   ORDER BY s.story_created_at DESC";
 
-                $result = $conn->query($sql);
+            $result = $conn->query($sql);
 
-                // Loop through the results and display the posts
-                if ($result->num_rows > 0) {
-                    while ($row = $result->fetch_assoc()) {
+
+            // Loop through the results and display the posts
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
                     // <!-- Post content -->
-                    
-                    echo'<div class="w-full hover:text-red-700" style=" box-shadow: -1px 18px 11px 0px; border-radius:2px 5px 20px 25px;">';
-                        // <!-- Post author -->
-                        echo'<div class="flex items-center mt-8 mb-2 mx-auto max-w-screen-lg">';
-                        echo'<div class="" >';
-                            if ($row['profile_picture']) {
-                                // profile picture
-                                echo " <button type='button' class='rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-red-600 ml-2  w-10 h-10 rounded-full ' >";
-                                echo "<img ' src='" . $row['profile_picture'] . "' alt='Profile Picture' class='w-10 h-10 rounded-full ' >";
-                                echo "</button>";
-                            } else {
-                                echo " <button type='button' class='rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-red-600 ml-2  w-10 h-10 rounded-full '>";
-                                echo "<img src='https://www.citypng.com/public/uploads/preview/profile-user-round-red-icon-symbol-download-png-11639594337tco5j3n0ix.png' alt='Profile Picture' class='mr-8 w-10 h-10>";
-                                echo "</button>";
-                            }
-                        echo'</div>';
 
-                        echo'<div class="text-gray-700 font-medium ml-2">';
-                                echo "<h2>Posted by " . $row['name'] . "</h2>";
-                                echo "<p>Posted by " . $row['name'] . " on " . $row['story_created_at'] . "</p>";
-                                echo'</div>';
-                        echo'</div>';
+                    echo '<div class="w-full hover:text-red-700" style=" box-shadow: -1px 18px 11px 0px; border-radius:2px 5px 20px 25px;">';
+                    // <!-- Post author -->
+                    echo '<div class="flex items-center mt-8 mb-2 mx-auto max-w-screen-lg">';
+                    echo '<div class="ml-4" >';
+                    // if ($row['profile_picture']) {
+                    //     // profile picture
+                    //     echo " <button type='button' class='rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-red-600 ml-2  w-10 h-10 rounded-full ' >";
+                    //     echo "<img ' src='" . $row['profile_picture'] . "' alt='Profile Picture' class='w-10 h-10 rounded-full ' >";
+                    //     echo "</button>";
+                    // } else {
+                    //     echo " <button type='button' class='rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-red-600 ml-2  w-10 h-10 rounded-full '>";
+                    //     echo "<img src='https://www.citypng.com/public/uploads/preview/profile-user-round-red-icon-symbol-download-png-11639594337tco5j3n0ix.png' alt='Profile Picture' class='mr-8 w-10 h-10>";
+                    //     echo "</button>";
+                    // }
 
-                        echo "<hr>";
-
-                        echo'<div class="m-10 mt-4 hover:text-yellow-600 ">';
-                        // <!-- Post title -->
-                        echo "<h5 class='text-sm font-bold '>" . $row['story_title'] . "</h5>";
-                        // <!-- Post content -->
-                        echo "<p class='leading-relaxed ml-2';>" . $row['story_content'] . "</p>";
-                        echo'</div>';
-
-                        // <!-- Post image -->
-                        if ($row['story_image']) {
-                            echo "<img src='" . $row['story_image'] . "' alt='Post Image' class='mx-auto rounded max-w-200 mb-4'>";
-                        }
-
-                    echo'</div>';
-
-
+                    $profile_picture = $row["profile_picture"];
+                    // Build the HTML code with the user's data
+                    $html = '<img src="profile_pictures/';
+                    if (!empty($profile_picture)) {
+                        $html .= $profile_picture;
+                    } else {
+                        $html .= 'https://www.citypng.com/public/uploads/preview/profile-user-round-red-icon-symbol-download-png-11639594337tco5j3n0ix.png';
                     }
-                } else {
-                    echo "No posts found.";
+                    $html .= '" class="w-12 h-12 rounded-full" alt="Profile Picture">';
+                    // Display the HTML code
+                    echo $html;
+                    echo '</div>';
+
+                    echo '<div class="text-gray-300 font-medium ml-2">';
+                    echo "<h2>Posted by " . $row['name'] . "</h2>";
+                    echo "<p>Posted by " . $row['name'] . " on " . $row['story_created_at'] . "</p>";
+                    echo '</div>';
+                    echo '</div>';
+
+                    echo "<hr class='border-t-4 border-gray-700 my-3'>";
+
+                    echo '<div class="m-10 mt-4 hover:text-yellow-600 ">';
+                    // <!-- Post title -->
+                    echo "<h5 class='text-sm font-bold '>" . $row['story_title'] . "</h5>";
+                    // <!-- Post content -->
+                    echo "<p class='leading-relaxed ml-2';>" . $row['story_content'] . "</p>";
+                    echo '</div>';
+
+                    // <!-- Post image -->
+                    if ($row['story_image']) {
+                        echo "<img src='" . $row['story_image'] . "' alt='Post Image' class='mx-auto rounded max-w-200 mb-4'>";
+                    }
+
+                    echo'<button id="like-btn" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Like</button>';
+                    echo'<button id="dislike-btn" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">Dislike</button>';
+                    echo '</div>';
                 }
-                
+            } else {
+                echo "No posts found.";
+            }
+
             ?>
 
         </div>
@@ -523,7 +538,36 @@ require_once "include/connect.php";
 
 
 
-    
+
+
+
+
+    <!-- reaction -->
+
+    <!-- <div class="post" data-post-id="1">
+        <div class="reactions ">
+
+            <button class="reaction-btn hover:text-red-700" data-reaction="heart">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+                </svg>Love
+            </button>
+            <button class="reaction-btn hover:text-red-700" data-reaction="thumbs-up">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6.633 10.5c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 012.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 00.322-1.672V3a.75.75 0 01.75-.75A2.25 2.25 0 0116.5 4.5c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 01-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 00-1.423-.23H5.904M14.25 9h2.25M5.904 18.75c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 01-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 10.203 4.167 9.75 5 9.75h1.053c.472 0 .745.556.5.96a8.958 8.958 0 00-1.302 4.665c0 1.194.232 2.333.654 3.375z" />
+                </svg>
+                Like
+            </button>
+            <button class="reaction-btn hover:text-red-700" data-reaction="thumbs-down">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 15h2.25m8.024-9.75c.011.05.028.1.052.148.591 1.2.924 2.55.924 3.977a8.96 8.96 0 01-.999 4.125m.023-8.25c-.076-.365.183-.75.575-.75h.908c.889 0 1.713.518 1.972 1.368.339 1.11.521 2.287.521 3.507 0 1.553-.295 3.036-.831 4.398C20.613 14.547 19.833 15 19 15h-1.053c-.472 0-.745-.556-.5-.96a8.95 8.95 0 00.303-.54m.023-8.25H16.48a4.5 4.5 0 01-1.423-.23l-3.114-1.04a4.5 4.5 0 00-1.423-.23H6.504c-.618 0-1.217.247-1.605.729A11.95 11.95 0 002.25 12c0 .434.023.863.068 1.285C2.427 14.306 3.346 15 4.372 15h3.126c.618 0 .991.724.725 1.282A7.471 7.471 0 007.5 19.5a2.25 2.25 0 002.25 2.25.75.75 0 00.75-.75v-.633c0-.573.11-1.14.322-1.672.304-.76.93-1.33 1.653-1.715a9.04 9.04 0 002.86-2.4c.498-.634 1.226-1.08 2.032-1.08h.384" />
+                </svg>
+                Hate
+            </button>
+        </div>
+    </div> -->
+
+
 
 
 

@@ -104,6 +104,8 @@
 
 
 <?php
+
+
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -163,29 +165,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $upload_dir = 'uploads/';
 
-            if (empty($errors)) {
+            if(empty($errors)) {
                 // Check if file type is valid
                 $allowed_types = array('jpg', 'jpeg', 'png');
                 $profile_picture_extension = pathinfo($profile_picture_name, PATHINFO_EXTENSION);
                 if (!in_array($profile_picture_extension, $allowed_types)) {
                     $errors[] = "Invalid file type. Allowed types: jpg, jpeg, png";
                 }
-
+    
                 // Check if file size is valid
                 $max_size = 500000; // 500kb
                 if ($profile_picture_size > $max_size) {
                     $errors[] = "File size exceeds maximum size. Maximum size: 500kb";
                 }
-
+    
                 // Generate unique file name to prevent overwriting
                 $new_file_name = uniqid('profile_', true) . "." . $profile_picture_extension;
-
+    
                 // Upload file to server
                 if (move_uploaded_file($profile_picture_tmp_name, $upload_dir . $new_file_name)) {
-
+    
                     // Insert user data into the database
                     $insert_user_query = "INSERT INTO users (name, email, password, profile_picture) VALUES ('$name', '$email', '$hashed_password', '$new_file_name')";
-
+    
                     if (mysqli_query($conn, $insert_user_query)) {
                         // Use JavaScript to display success message and redirect to index.php after 200ms
                         echo "<script>
@@ -201,16 +203,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $errors[] = "Error uploading file";
                 }
             }
-
-            mysqli_close($conn);
-        }
-
-        // Display errors
-        if (!empty($errors)) {
-            foreach ($errors as $error) {
-                echo $error . "<br>";
-            }
+    
+        mysqli_close($conn);
+    }
+    
+    // Display errors
+    if (!empty($errors)) {
+        foreach ($errors as $error) {
+            echo $error . "<br>";
         }
     }
 }
-?>
+}
+?>  
