@@ -478,12 +478,13 @@ require_once "include/connect.php";
                     while ($row = $result->fetch_assoc()) {
                     // <!-- Post content -->
                     
-                    echo'<div class="w-full p-2" style=" box-shadow: -1px 18px 11px 0px; border-radius:2px 5px 20px 25px;">';
+                    echo'<div class="w-full hover:text-red-700" style=" box-shadow: -1px 18px 11px 0px; border-radius:2px 5px 20px 25px;">';
                         // <!-- Post author -->
                         echo'<div class="flex items-center mt-8 mb-2 mx-auto max-w-screen-lg">';
+                        echo'<div class="" >';
                             if ($row['profile_picture']) {
                                 // profile picture
-                                echo " <button type='button' class='rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-red-600 mr-8  w-10 h-10 rounded-full ml-10'>";
+                                echo " <button type='button' class='rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-red-600 mr-8  w-10 h-10 rounded-full ml-10' style='box-shadow: 1px 8px 7px 0px; border-radius: 25px;'>";
                                 echo "<img ' src='" . $row['profile_picture'] . "' alt='Profile Picture' class='w-10 h-10 rounded-full ' >";
                                 echo "</button>";
                             } else {
@@ -491,8 +492,9 @@ require_once "include/connect.php";
                                 echo "<img src='https://www.citypng.com/public/uploads/preview/profile-user-round-red-icon-symbol-download-png-11639594337tco5j3n0ix.png' alt='Profile Picture' class='mr-8 w-10 h-10>";
                                 echo "</button>";
                             }
+                        echo'</div>';
 
-                        echo'<div class="text-gray-700 font-medium ">';
+                        echo'<div class="text-gray-700 font-medium ml-2">';
                                 echo "<h2>Posted by " . $row['name'] . "</h2>";
                                 echo "<p>Posted by " . $row['name'] . " on " . $row['story_created_at'] . "</p>";
                                 echo'</div>';
@@ -500,7 +502,7 @@ require_once "include/connect.php";
 
                         echo "<hr>";
 
-                        echo'<div class="m-10 mt-4">';
+                        echo'<div class="m-10 mt-4 hover:text-yellow-600 ">';
                         // <!-- Post title -->
                         echo "<h5 class='text-sm font-bold '>" . $row['story_title'] . "</h5>";
                         // <!-- Post content -->
