@@ -111,37 +111,6 @@ if ($result->num_rows > 0) {
     </div>
 
 
-    <!-- 
-    <main class="bg-white dark:bg-gray-900">
-        <div class="flex justify-between  mx-auto max-w-screen-sm" style="margin-top: 2%; box-shadow: 0 10px 15px 0; border-radius: 20px;">
-            <div class="w-full md:w-3/4 lg:w-2/3 xl:w-1/2">
-                <form class="space-y-6 m-8" method="post" enctype="multipart/form-data">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-white" for="name">Name</label>
-                        <input class="block w-full px-3 py-2 mt-1 text-sm text-gray-900 bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:ring-primary-600 focus:border-primary-600 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:focus:border-primary-600 dark:focus:ring-primary-800" type="text" name="name" id="name" value="<?php echo $name ?>">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-white" for="bio">Bio [max 300 chars]</label>
-                        <textarea class="block w-full px-3 py-2 mt-1 text-sm text-gray-900 bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:ring-primary-600 focus:border-primary-600 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:focus:border-primary-600 dark:focus:ring-primary-800" rows="4" maxlength="300" name="bio" id="bio"><?php echo $bio ?></textarea>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-white" for="email">Email</label>
-                        <input class="block w-full px-3 py-2 mt-1 text-sm text-gray-900 bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:ring-primary-600 focus:border-primary-600 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:focus:border-primary-600 dark:focus:ring-primary-800" type="email" name="email" id="email" value="<?php echo $email ?>">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-white" for="profile_picture">Upload Profile</label>
-                        <input class="block w-full px-3 py-2 mt-1 text-sm text-gray-900 bg-gray-100 border border-gray-300 rounded-lg cursor-pointer focus:outline-none focus:ring-primary-600 focus:border-primary-600 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:focus:border-primary-600 dark:focus:ring-primary-800" type="file" name="profile_picture" id="profile_picture">
-                    </div>
-                    <div>
-                        <button type="submit" value="Save Changes" class="w-full px-4 py-2 text-base font-medium text-white bg-primary-600 rounded-lg shadow-md hover:bg-primary-700 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-                            Save Changes
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </main> -->
-
     <main class="bg-white dark:bg-gray-900">
         <div class="flex justify-center px-4 py-8 mx-auto max-w-screen-md">
             <div class="w-full md:w-3/4 lg:w-2/3 xl:w-1/2">
@@ -176,7 +145,7 @@ if ($result->num_rows > 0) {
 
     <!-- go back button -->
     <div class="text-center">
-        <a href="profile.php" class="font-medium hover:text-red-500 dark:text-white " >
+        <a href="profile.php" class="font-medium hover:text-red-500 dark:text-white ">
             <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width: 35px; margin:3% 0% 4% 49%; box-shadow: 0 5px 10px 0; border-radius: 20px;">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M21 16.811c0 .864-.933 1.405-1.683.977l-7.108-4.062a1.125 1.125 0 010-1.953l7.108-4.062A1.125 1.125 0 0121 8.688v8.123zM11.25 16.811c0 .864-.933 1.405-1.683.977l-7.108-4.062a1.125 1.125 0 010-1.953L9.567 7.71a1.125 1.125 0 011.683.977v8.123z"></path>
             </svg>

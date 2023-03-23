@@ -74,10 +74,10 @@ session_start();
                             if ($profile_picture != null) {
                                 $profile_picture_html = '<img src="profile_pictures/' . $profile_picture . '" alt="Profile Picture">';
                             } else {
-                                $profile_picture_html = '<img src="default_profile_picture.jpg" alt="Profile Picture">';
+                                $profile_picture_html = '<img src="https://www.citypng.com/public/uploads/preview/profile-user-round-red-icon-symbol-download-png-11639594337tco5j3n0ix.png" alt="Profile Picture">';
                             }
                         } else {
-                            $profile_picture_html = '<img src="default_profile_picture.jpg" alt="Profile Picture">';
+                            $profile_picture_html = '<img src="https://www.citypng.com/public/uploads/preview/profile-user-round-red-icon-symbol-download-png-11639594337tco5j3n0ix.png" alt="Profile Picture">';
                         }
 
 

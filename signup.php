@@ -38,7 +38,7 @@ require_once "include/connect.php";
 					<h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
 						Create Account
 					</h1>
-					<form class="space-y-4 md:space-y-6" method="POST" action="signup.php">
+					<form class="space-y-4 md:space-y-6" method="POST" action="signup.php" enctype="multipart/form-data">
 						<div>
 							<label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Full
 								Name</label>
@@ -53,6 +53,15 @@ require_once "include/connect.php";
 							<label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
 							<input type="password" name="password" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
 						</div>
+
+						<div>
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="profile_picture">Upload Profile</label>
+                        <input class="block w-full mb-5 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" type="file" name="profile_picture" id="profile_picture" required="">
+                        <!-- <label class="block text-sm font-medium text-gray-700 dark:text-white" for="profile_picture">Upload Profile</label> -->
+                        <!-- <input class="block w-full px-3 py-2 mt-1 text-sm text-gray-900 bg-gray-100 border border-gray-300 rounded-lg cursor-pointer focus:outline-none focus:ring-primary-600 focus:border-primary-600 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:focus:border-primary-600 dark:focus:ring-primary-800" type="file" name="profile_picture" id="profile_picture"> -->
+                    </div>
+
+
 						<div class="flex items-start">
 							<div class="flex items-center h-5">
 								<input id="terms" aria-describedby="terms" type="checkbox" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800" required="">
@@ -73,95 +82,206 @@ require_once "include/connect.php";
 	</section>
 
 	<?php
-	// Check if the form is submitted
-	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+	// // Check if the form is submitted
+	// if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-		// Get form data
-		$name = $_POST['name'];
-		$email = $_POST['email'];
-		$password = $_POST['password'];
+	// 	// Get form data
+	// 	$name = $_POST['name'];
+	// 	$email = $_POST['email'];
+	// 	$password = $_POST['password'];
 
-		// Validate form data
-		$errors = [];
+	// 	// Validate form data
+	// 	$errors = [];
 
-		if (empty($name)) {
-			$errors[] = "Name is required";
-		}
+	// 	if (empty($name)) {
+	// 		$errors[] = "Name is required";
+	// 	}
 
-		if (empty($email)) {
-			$errors[] = "Email is required";
-		}
+	// 	if (empty($email)) {
+	// 		$errors[] = "Email is required";
+	// 	}
 
-		if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-			$errors[] = "Invalid email format";
-		}
+	// 	if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+	// 		$errors[] = "Invalid email format";
+	// 	}
 
-		if (empty($password)) {
-			$errors[] = "Password is required";
-		}
+	// 	if (empty($password)) {
+	// 		$errors[] = "Password is required";
+	// 	}
 
-		// If there are no errors, check if the email already exists in the database
-		// If there are no errors, insert the user data into the database
-		if (empty($errors)) {
+	// 	// If there are no errors, check if the email already exists in the database
+	// 	// If there are no errors, insert the user data into the database
+	// 	if (empty($errors)) {
 
-			// Connect to the database
-			$db_host = "localhost";
-			$db_user = "root";
-			$db_pass = "";
-			$db_name = "backend";
+	// 		// Connect to the database
+	// 		$db_host = "localhost";
+	// 		$db_user = "root";
+	// 		$db_pass = "";
+	// 		$db_name = "backend";
 
-			$conn = mysqli_connect($db_host, $db_user, $db_pass, $db_name);
+	// 		$conn = mysqli_connect($db_host, $db_user, $db_pass, $db_name);
 
-			if (!$conn) {
-				die("Connection failed: " . mysqli_connect_error());
-			}
+	// 		if (!$conn) {
+	// 			die("Connection failed: " . mysqli_connect_error());
+	// 		}
 
-			// Check if the email already exists in the database
-			$email_query = "SELECT * FROM users WHERE email='$email'";
-			$email_result = mysqli_query($conn, $email_query);
+	// 		// Check if the email already exists in the database
+	// 		$email_query = "SELECT * FROM users WHERE email='$email'";
+	// 		$email_result = mysqli_query($conn, $email_query);
 
-			if (mysqli_num_rows($email_result) > 0
-			) {
-				// Use JavaScript to display error message
-				echo "<script>
-				setTimeout(function() {
-					alert(`Account already exist! \nGo to login page!`);
-					window.location.href = 'index.php';
-				}, 200);
-			 </script>";
-			} else {
-				// Hash the password
-				$hashed_password = password_hash($password, PASSWORD_DEFAULT);
+	// 		if (mysqli_num_rows($email_result) > 0
+	// 		) {
+	// 			// Use JavaScript to display error message
+	// 			echo "<script>
+	// 			setTimeout(function() {
+	// 				alert(`Account already exist! \nGo to login page!`);
+	// 				window.location.href = 'index.php';
+	// 			}, 200);
+	// 		 </script>";
+	// 		} else {
+	// 			// Hash the password
+	// 			$hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-				// Insert user data into the database
-				$insert_user_query = "INSERT INTO users (name, email, password) VALUES ('$name', '$email', '$hashed_password')";
+	// 			// Insert user data into the database
+	// 			$insert_user_query = "INSERT INTO users (name, email, password) VALUES ('$name', '$email', '$hashed_password')";
 
-				if (mysqli_query($conn, $insert_user_query)) {
-					// Use JavaScript to display success message and redirect to index.php after 200ms
-					echo "<script>
-							setTimeout(function() {
-								alert('Account created successfully');
-								window.location.href = 'index.php';
-							}, 200);
-						 </script>";
-				} else {
-					$errors[] = "Error: " . $insert_user_query . "<br>" . mysqli_error($conn);
-				}
-			}
+	// 			if (mysqli_query($conn, $insert_user_query)) {
+	// 				// Use JavaScript to display success message and redirect to index.php after 200ms
+	// 				echo "<script>
+	// 						setTimeout(function() {
+	// 							alert('Account created successfully');
+	// 							window.location.href = 'index.php';
+	// 						}, 200);
+	// 					 </script>";
+	// 			} else {
+	// 				$errors[] = "Error: " . $insert_user_query . "<br>" . mysqli_error($conn);
+	// 			}
+	// 		}
 
 
-			mysqli_close($conn);
-		}
+	// 		mysqli_close($conn);
+	// 	}
 
-		// Display errors
-		if (!empty($errors)) {
-			foreach ($errors as $error) {
-				echo $error . "<br>";
-			}
-		}
-	}
+	// 	// Display errors
+	// 	if (!empty($errors)) {
+	// 		foreach ($errors as $error) {
+	// 			echo $error . "<br>";
+	// 		}
+	// 	}
+	// }
 	?>
 	
+<?php
+// Check if the form is submitted
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    // Get form data
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    // Validate form data
+    $errors = [];
+    if (empty($name)) {
+        $errors[] = "Name is required";
+    }
+    if (empty($email)) {
+        $errors[] = "Email is required";
+    }
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $errors[] = "Invalid email format";
+    }
+    if (empty($password)) {
+        $errors[] = "Password is required";
+    }
+    // Check if file is uploaded
+    if (empty($_FILES['profile_picture']['name'])) {
+        $errors[] = "Profile picture is required";
+    }
+    // If there are no errors, check if the email already exists in the database
+    if (empty($errors)) {
+        // Connect to the database
+        $db_host = "localhost";
+        $db_user = "root";
+        $db_pass = "";
+        $db_name = "backend";
+        $conn = mysqli_connect($db_host, $db_user, $db_pass, $db_name);
+        if (!$conn) {
+            die("Connection failed: " . mysqli_connect_error());
+        }
+        // Check if the email already exists in the database
+        $email_query = "SELECT * FROM users WHERE email='$email'";
+        $email_result = mysqli_query($conn, $email_query);
+
+        if (mysqli_num_rows($email_result) > 0) {
+            // Use JavaScript to display error message
+            echo "<script>
+                    setTimeout(function() {
+                        alert(`Account already exists! \nGo to login page!`);
+                        window.location.href = 'index.php';
+                    }, 200);
+                 </script>";
+        } else {
+            // Hash the password
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+            // Upload profile picture to server
+            $profile_picture_name = $_FILES['profile_picture']['name'];
+            $profile_picture_tmp_name = $_FILES['profile_picture']['tmp_name'];
+            $profile_picture_type = $_FILES['profile_picture']['type'];
+            $profile_picture_size = $_FILES['profile_picture']['size'];
+
+            $upload_dir = 'profile_pictures/';
+
+            if (empty($errors)) {
+                // Check if file type is valid
+                $allowed_types = array('jpg', 'jpeg', 'png');
+                $profile_picture_extension = pathinfo($profile_picture_name, PATHINFO_EXTENSION);
+                if (!in_array($profile_picture_extension, $allowed_types)) {
+                    $errors[] = "Invalid file type. Allowed types: jpg, jpeg, png";
+                }
+
+                // Check if file size is valid
+                $max_size = 500000; // 500kb
+                if ($profile_picture_size > $max_size) {
+                    $errors[] = "File size exceeds maximum size. Maximum size: 500kb";
+                }
+
+                // Generate unique file name to prevent overwriting
+                $new_file_name = uniqid('profile_', true) . "." . $profile_picture_extension;
+
+                // Upload file to server
+                if (move_uploaded_file($profile_picture_tmp_name, $upload_dir . $new_file_name)) {
+
+                    // Insert user data into the database
+                    $insert_user_query = "INSERT INTO users (name, email, password, profile_picture) VALUES ('$name', '$email', '$hashed_password', '$new_file_name')";
+
+                    if (mysqli_query($conn, $insert_user_query)) {
+                        // Use JavaScript to display success message and redirect to index.php after 200ms
+                        echo "<script>
+                                setTimeout(function() {
+                                    alert('Account created successfully');
+                                    window.location.href = 'index.php';
+                                }, 200);
+                             </script>";
+                    } else {
+                        $errors[] = "Error: " . $insert_user_query . "<br>" . mysqli_error($conn);
+                    }
+                } else {
+                    $errors[] = "Error uploading file";
+                }
+            }
+
+            mysqli_close($conn);
+        }
+
+        // Display errors
+        if (!empty($errors)) {
+            foreach ($errors as $error) {
+                echo $error . "<br>";
+            }
+        }
+    }
+}
+?>
 
 </body>
 

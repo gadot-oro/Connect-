@@ -464,12 +464,6 @@ require_once "include/connect.php";
                   FROM stories s 
                   JOIN users u ON s.user_id = u.id 
                   ORDER BY s.story_created_at DESC";
-                // $sql = "SELECT s.*, u.name, u.email, u.joined_day, u.profile_picture, s.story_created_at, COUNT(c.id) AS comment_count
-                //     FROM stories s 
-                //     JOIN users u ON s.user_id = u.id 
-                //     LEFT JOIN comments c ON s.id = c.story_id 
-                //     GROUP BY s.id 
-                //     ORDER BY s.story_created_at DESC";
 
                 $result = $conn->query($sql);
 
@@ -484,11 +478,11 @@ require_once "include/connect.php";
                         echo'<div class="" >';
                             if ($row['profile_picture']) {
                                 // profile picture
-                                echo " <button type='button' class='rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-red-600 mr-8  w-10 h-10 rounded-full ml-10' style='box-shadow: 1px 8px 7px 0px; border-radius: 25px;'>";
+                                echo " <button type='button' class='rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-red-600 ml-2  w-10 h-10 rounded-full ' >";
                                 echo "<img ' src='" . $row['profile_picture'] . "' alt='Profile Picture' class='w-10 h-10 rounded-full ' >";
                                 echo "</button>";
                             } else {
-                                echo " <button type='button' class='rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-red-600 mr-8  w-10 h-10 rounded-full ml-10'>";
+                                echo " <button type='button' class='rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-red-600 ml-2  w-10 h-10 rounded-full '>";
                                 echo "<img src='https://www.citypng.com/public/uploads/preview/profile-user-round-red-icon-symbol-download-png-11639594337tco5j3n0ix.png' alt='Profile Picture' class='mr-8 w-10 h-10>";
                                 echo "</button>";
                             }
@@ -529,39 +523,7 @@ require_once "include/connect.php";
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
 
 
 
