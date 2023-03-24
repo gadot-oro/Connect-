@@ -523,8 +523,22 @@ session_start();
                         echo "<img src='" . $row['story_image'] . "' alt='Post Image' class='mx-auto rounded max-w-200 mb-4'>";
                     }
 
-                    echo'<button id="like-btn" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Like</button>';
-                    echo'<button id="dislike-btn" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">Dislike</button>';
+                    // echo '<div class="flex justify-center">';
+                    // echo '<button id="like-btn" class="mx-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600" onclick="likeStory(' . $row['id'] . ')" ' . (isset($_SESSION['likes'][$row['id']]) ? 'disabled' : '') . '>Like</button>';
+                    // echo '<button id="dislike-btn" class="mx-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600" onclick="dislikeStory(' . $row['id'] . ')" ' . (isset($_SESSION['dislikes'][$row['id']]) ? 'disabled' : '') . '>Dislike</button>';
+                    // echo '</div>';
+                    // echo '<div class="flex justify-center">';
+                    // echo '<p class="mt-4">👍: <span id="like-count-' . $row['id'] . '">' . (isset($row['like_count']) ? $row['like_count'] : 0) . '</span></p>';
+                    // echo '<p class="mt-4 ml-4">👎: <span id="dislike-count-' . $row['id'] . '">' . (isset($row['dislike_count']) ? $row['dislike_count'] : 0) . '</span></p>';
+                    // echo '</div>';
+
+                    echo '<div class="flex justify-center">';
+                    echo '<button id="like-btn" class="mx-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600" onclick="likeStory(' . $row['id'] . ')" ' . (isset($_SESSION['likes'][$row['id']]) ? 'disabled' : '') . '>Like</button>';
+                    echo '<p class="mt-4 ml-4">👍: <span id="like-count-' . $row['id'] . '">' . (isset($row['like_count']) ? $row['like_count'] : 0) . '</span></p>';
+                    echo '<button id="dislike-btn" class="mx-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600" onclick="dislikeStory(' . $row['id'] . ')" ' . (isset($_SESSION['dislikes'][$row['id']]) ? 'disabled' : '') . '>Dislike</button>';
+                    echo '<p class="mt-4 ml-4">👎: <span id="dislike-count-' . $row['id'] . '">' . (isset($row['dislike_count']) ? $row['dislike_count'] : 0) . '</span></p>';
+                    echo '</div>';
+
                     echo '</div>';
                 }
             } else {
@@ -535,6 +549,179 @@ session_start();
 
         </div>
     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <?php
+    // Get all stories from the stories table with user name and created time
+    $sql = "SELECT s.*, u.name, u.email, u.joined_day, u.profile_picture, s.story_created_at 
+      FROM stories s 
+      JOIN users u ON s.user_id = u.id 
+      ORDER BY s.story_created_at DESC";
+
+    $result = $conn->query($sql);
+
+    // Loop through the results and display the posts
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            // <!-- Post content -->
+            echo '<div class="w-full hover:text-red-700" style=" box-shadow: -1px 18px 11px 0px; border-radius:2px 5px 20px 25px;">';
+
+            // <!-- Post author -->
+            echo '<div class="flex items-center mt-8 mb-2 mx-auto max-w-screen-lg">';
+            echo '<div class="ml-4" >';
+
+            // Show the user's profile picture
+            $profile_picture = $row["profile_picture"];
+            $html = '<img src="profile_pictures/';
+            if (!empty($profile_picture)) {
+                $html .= $profile_picture;
+            } else {
+                $html .= 'https://www.citypng.com/public/uploads/preview/profile-user-round-red-icon-symbol-download-png-11639594337tco5j3n0ix.png';
+            }
+            $html .= '" class="w-12 h-12 rounded-full" alt="Profile Picture">';
+            echo $html;
+            echo '</div>';
+            echo '<div class="text-gray-300 font-medium ml-2">';
+            echo "<h2>Posted by " . $row['name'] . "</h2>";
+            echo "<p>Posted by " . $row['name'] . " on " . $row['story_created_at'] . "</p>";
+            echo '</div>';
+            echo '</div>';
+
+            echo "<hr class='border-t-4 border-gray-700 my-3'>";
+
+            echo '<div class="m-10 mt-4 hover:text-yellow-600 ">';
+            // <!-- Post title -->
+            echo "<h5 class='text-sm font-bold '>" . $row['story_title'] . "</h5>";
+            // <!-- Post content -->
+            echo "<p class='leading-relaxed ml-2';>" . $row['story_content'] . "</p>";
+            echo '</div>';
+
+            // <!-- Post image -->
+            if ($row['story_image']) {
+                echo "<img src='" . $row['story_image'] . "' alt='Post Image' class='mx-auto rounded max-w-200 mb-4'>";
+            }
+
+
+// // Like and dislike buttons
+// echo '<div class="flex justify-center">';
+// echo '<button id="like-btn" class="mx-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600" onclick="likeStory(' . $row['id'] . ')">Like</button>';
+// echo '<button id="dislike-btn" class="mx-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600" onclick="dislikeStory(' . $row['id'] . ')">Dislike</button>';
+// echo '</div>';
+
+// // Display the like and dislike counts
+// echo '<div class="flex justify-center">';
+// echo '<p class="mt-4">Likes: <span id="like-count-' . $row['id'] . '">' . (isset($row['like_count']) ? $row['like_count'] : 0) . '</span></p>';
+// echo '<p class="mt-4 ml-4"> Dislikes: <span id="dislike-count-' . $row['id'] . '">' . (isset($row['dislike_count']) ? $row['dislike_count'] : 0) . '</span></p>';
+// echo '</div>'; // Close post container
+echo '<div class="flex justify-center">';
+  echo '<button id="like-btn" class="mx-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600" onclick="likeStory(' . $row['id'] . ')" ' . (isset($_SESSION['likes'][$row['id']]) ? 'disabled' : '') . '>Like</button>';
+  echo '<button id="dislike-btn" class="mx-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600" onclick="dislikeStory(' . $row['id'] . ')" ' . (isset($_SESSION['dislikes'][$row['id']]) ? 'disabled' : '') . '>Dislike</button>';
+echo '</div>';
+echo '<div class="flex justify-center">';
+  echo '<p class="mt-4">👍: <span id="like-count-' . $row['id'] . '">' . (isset($row['like_count']) ? $row['like_count'] : 0) . '</span></p>';
+  echo '<p class="mt-4 ml-4">👎: <span id="dislike-count-' . $row['id'] . '">' . (isset($row['dislike_count']) ? $row['dislike_count'] : 0) . '</span></p>';
+echo '</div>';
+
+
+
+        }
+    } else {
+        echo "No posts found.";
+    }
+
+    // Close database connection
+    $conn->close();
+    ?>
+
+
+
+
+
+
+
+<script>
+    function likeStory(storyId) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      // Update the like count
+      document.getElementById("like-count-" + storyId).innerHTML = this.responseText;
+    }
+  };
+  xhttp.open("POST", "reaction.php", true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.send("story_id=" + storyId + "&reaction_type=like");
+}
+
+function dislikeStory(storyId) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      // Update the dislike count
+      document.getElementById("dislike-count-" + storyId).innerHTML = this.responseText;
+    }
+  };
+  xhttp.open("POST", "reaction.php", true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.send("story_id=" + storyId + "&reaction_type=dislike");
+}
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
